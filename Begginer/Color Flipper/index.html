@@ -18,17 +18,27 @@
         const blue = document.querySelector(".blue")
         const random = document.querySelector(".random")
 
-        green.addEventListener("click", () => {
-            document.body.style.backgroundColor="green"
-        })
+        function setColor(name) {
+            document.body.style.backgroundColor=name
+        }
 
-        red.addEventListener("click", () => {
-            document.body.style.backgroundColor = "red"
-        })
+        function randomColor() {
+            const red = Math.floor(Math.random() * 255)
+            const green = Math.floor(Math.random() * 255)
+            const blue = Math.floor(Math.random() * 255)
 
-        blue.addEventListener("click", () => {
-            document.body.style.backgroundColor = "blue"
-        })
+            const color = `rgb(${red} ${green} ${blue})`
+
+            document.body.style.backgroundColor=color
+        }
+
+        random.addEventListener("click",()=>randomColor())
+
+        green.addEventListener("click", ()=>setColor("green"))
+
+        red.addEventListener("click", ()=>setColor("red"))
+        blue.addEventListener("click", ()=>setColor("blue"))
+
     </script>
 </body>
 
