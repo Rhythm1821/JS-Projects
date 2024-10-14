@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Todo</title>
+</head>
+
+<body>
+    <h1>Todo</h1>
+    <div id="items"></div>
+    <input id="itemInput" type="text">
+    <button onclick="addItem()">Add</button>
+
+    <script>
+        let items = []
+        let itemsDiv = document.getElementById("items")
+        const input = document.getElementById("itemInput")
+
+        function renderItems() {
+            itemsDiv.innerHTML = ""
+            for (const [idx, item] of Object.entries(items)) {
+                const container = document.createElement("div")
+                container.style.marginBottom = "10px"
+
+                const text = document.createElement("p")
+                text.style.display = "inline"
+                text.style.marginRight = "10px"
+                text.textContent = item
+
+                const button = document.createElement("button")
+                button.textContent = "Delete"
+                button.onclick = () => removeItem(idx)
+
+                container.appendChild(text)
+                container.appendChild(button)
+                itemsDiv.appendChild(container)
+            }
+        }
+
+        renderItems()
+
+        function loadItems() {
+            const oldItems = localStorage.getItem("items")
+            if (oldItems) {
+                items = JSON.parse(oldItems)
+            }
+            renderItems()
+        }
+
+        function saveItems() {
+            const stringItems = JSON.stringify(items)
+            localStorage.setItem("items", stringItems)
+        }
+
+        function addItem(idx) {
+            val = input.value
+            if (!val) return
+            items.push(val)
+            renderItems()
+            input.value = ""
+            saveItems()
+        }
+
+        function removeItem(idx) {
+            items.splice(idx, 1)
+            renderItems()
+            saveItems()
+        }
+
+        document.addEventListener("DOMContentLoaded", loadItems)
+    </script>
+</body>
+
+</html>
